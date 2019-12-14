@@ -1,0 +1,28 @@
+server:
+  port: 8008
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/microfinanceweb
+    username: postgres
+    password: 123456
+  freemarker:
+    allow-request-override: false
+    cache: false
+    check-template-location: true
+    charset: UTF-8
+    content-type: text/html; charset=utf-8
+    expose-request-attributes: false
+    expose-session-attributes: false
+    expose-spring-macro-helpers: false
+    suffix: .html
+    template-loader-path: file:D:/microger/MicroFinance/upload_files/Template/
+  thymeleaf:
+#  prefix: file:D:/microger/MicroFinance/upload_files/Template/
+  prefix: classpath:/templates/
+  suffix: .html
+  mode: LEGACYHTML5
+  encoding: UTF-8
+  content-type: text/html
+  cache: false

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="./css/jigsaw.css">
+		<link rel="stylesheet" href="./css/layui.css" />
+	</head>
+	<body>
+		<form class="layui-form myform" action="/login" method="post" onsubmit="return func();">
+            <div class="username">
+                <input type="text" name="username" required lay-verify="username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+            </div>
+            <div class="pass">
+                <input type="password" name="password" required lay-verify="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+            <div class="login">
+                <div id="captcha" style="position: relative"></div>
+                <button type="button" class="layui-btn liji layui-btn-normal" lay-submit lay-filter="formDemo" id="submitBnt">登录</button>
+            </div>
+        </form>
+	</body>
+	<script src="./js/jquery-1.12.4.js"></script>
+	<script src="./js/jigsaw.js"></script>
+	<script src="./js/layui.js" ></script>
+	<script>
+		//滑动验证
+		var verify = jigsaw.init(document.getElementById('captcha'), function () {
+			alert("验证通过");
+		});
+	</script>
+</html>

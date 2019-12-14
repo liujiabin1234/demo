@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<link rel="stylesheet" href="/css/layer.css" />
+	<link rel="stylesheet" href="/css/layui.css" />
+	<style>
+		.box {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			height: 490px;
+			width: 340px;
+			right: 10%;
+			margin: auto;
+			background: #fff;
+			border-radius: 5px;
+		}
+		.inbox {
+			position: relative;
+			height: 100%;
+			width: 100%;
+		}
+		.ma {
+			position: absolute;
+			top: 105px;
+			left: 0;
+			right: 0;
+			margin: auto;
+			width: 140px;
+			height: 140px;
+			border: 1px solid #f7f2f2;
+			padding: 5px;
+		}
+		.title {
+			position: absolute;
+			top: 15px;
+			left: 20px;
+			font-size: 17px;
+		}
+
+		.inbox3 .success{
+			text-align: center;
+			margin-top: 100px;
+		}
+		.inbox3 .code{
+			font-size: 20px;
+			margin-top: 20px;
+		}
+		.inbox3 .text{
+			bottom:213px;
+		}
+		.inbox3 .aa{
+			bottom:135px
+		}
+		.getlink img{
+			width:35px;
+		}
+		.getlink span{
+			font-size: 17px;
+			vertical-align: middle;
+		}
+		.link-place span{
+			color: #666666;
+		}
+		.same-node span{
+			color: #666666;
+		}
+		.timeback .second{
+			color: #1E9FFF;
+		}
+		.linkfail .getlink {
+			margin-top: 65px;
+		}
+		a:hover{
+			color: #1E9FFF;
+		}
+	</style>
+</head>
+
+	<body>
+		<div class="box">
+			<div class="inbox">
+				<div class="title">扫码登录</div>
+				<div id="qrcode" class="ma"></div>
+			</div>
+		</div>	
+	</body>
+	<script src="/js/jquery-1.12.4.js"></script>
+	<script src="/js/qrcode.js"></script>
+	<script src="/js/layer.js" ></script>
+	<script src="/js/layui.js" ></script>
+	<script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=h0c8IosFyO1bdosRsIYpfLwxKaScq8Tn&s=1"></script>
+	<script >
+        var flag = 0;
+        var qrToken = "";
+
+		//二维码
+		var qrcode = new QRCode("qrcode", {
+			// text: 'your content',
+			width: 140,
+			height: 140,
+		    colorDark: "#000000",
+			colorLight: "#ffffff",
+			correctLevel: QRCode.CorrectLevel.H
+		});
+
+		//二维码数据填充
+		function refreshQr() {
+			clearInterval(flag);
+			$.ajax({
+				type: "get",
+				url: "/refreshCode",
+				success: function (r) {
+                    console.log(r);
+					qrcode.clear();
+					qrcode.makeCode(r);
+                    qrToken  = r;
+					flag = self.setInterval("loginJudge('" + r + "')", 2000);
+				},
+				error: function (e) {
+					layer.msg(e);
+				}
+			});
+		}
+
+		refreshQr();
+
+        //确认是否登录
+        function loginJudge(msg) {
+            $.ajax({
+                type: "get",
+                url: "/loginJudge",
+                data: {qrToken: msg},
+                success: function (r) {
+					if(r == 'scan_success'){
+                        clearInterval(flag);
+						layer.msg("扫码成功");
+					}else if(r == 'login_success'){
+                        clearInterval(flag);
+                        layer.msg("登陸成功");
+						parent.location.href = '/loginQr?qrToken='+qrToken;
+					}
+				},
+                error: function (e) {
+                    clearInterval(flag);
+                    console.log(e);
+                }
+            });
+        }
+
+		// WGS84坐标
+		var longitude=0, latitude=0, address='';//经纬度
+		function getGeo() {
+			//直接调用浏览器定位接口
+			var geolocation = new BMap.Geolocation();
+			geolocation.getCurrentPosition(function(r){
+				if(this.getStatus() == BMAP_STATUS_SUCCESS){
+					var mk = new BMap.Marker(r.point);
+					longitude = r.point.lng;
+					latitude = r.point.lat;
+					console.log('您的位置：'+r.point.lng+','+r.point.lat);
+
+					const point = new BMap.Point(longitude, latitude);
+					const geo = new BMap.Geocoder();
+					geo.getLocation(point, (res) => {//解析格式：城市，区县，街道，街道编号
+						var addComp = res.addressComponents;
+						address=addComp.city + ", " + addComp.district + ", " + addComp.street  + ", " + addComp.streetNumber;
+						console.log(address);
+					});
+				}
+				else {
+					console.log('failed：'+this.getStatus());
+				}
+			});
+		}
+
+		getGeo()
+	</script>
+</html>

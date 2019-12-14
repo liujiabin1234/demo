@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form id="loginForm">
+        账号：<input type="text" placeholder="请输入账号" name="username"></br>
+        密码：<input type="text" placeholder="请输入密码" name="password"></br>
+        <input type="button" id="loginBut" value="登录">
+    </form>
+</body>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script>
+    $("#loginBut").click(function () {
+        $.ajax({
+            type: "POST",
+            url: "/ajaxLogin",
+            data: $("#loginForm").serialize(),
+            success: function (r) {
+                if ("success" == r) {
+                    location.href="/"
+                }else{
+                    alert("账号或密码不正确！");
+                }
+            }
+        });
+    })
+</script>
+</html>
