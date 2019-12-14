@@ -61,6 +61,7 @@ public class ShiroConfiguration {
         map.put("/refreshCode","anon");
         map.put("/css/**", "anon");
         map.put("/js/**", "anon");
+        map.put("/checkcenter/**", "anon");
         //登出
         map.put("/logout","logout");
         //对所有用户认证

@@ -1,49 +1,48 @@
 package com.example.demo.websocket;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.utils.R;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
- * 消息推送
- **/
+ * 使用:
+ * 1.先开启socket链接
+ * http://localhost:8008/checkcenter/socket/22
+ * http://localhost:8008/checkcenter/socket/20
+ * 2.后台发送数据
+ * http://localhost:8008/checkcenter/socket/push/22?message=I am 22
+ * http://localhost:8008/checkcenter/socket/push/20?message=I am 20
+ * 注意:
+ * 1.页面关闭或刷新socket链接就断开
+ */
 @Controller
 @RequestMapping("/checkcenter")
 public class CheckCenterController {
-    @Autowired
-    WebSocketServer webSocketServer;
 
-    @RequestMapping(value="/pushVideoListToWeb",method=RequestMethod.POST,consumes = "application/json")
-    @ResponseBody
-    public Map<String,Object> pushVideoListToWeb(@RequestBody Map<String,Object> param) {
-        Map<String,Object> result =new HashMap<String,Object>();
-        try {
-//            WebSocketServer.sendInfo("有新客户呼入,sltAccountId:"+CommonUtils.getValue(param, "sltAccountId"));
-            result.put("operationResult", true);
-        }catch (Exception e) {
-            result.put("operationResult", true);
-        }
-        return result;
+    //页面请求
+    @GetMapping("/socket/{cid}")
+    public ModelAndView socket(@PathVariable String cid) {
+        ModelAndView mav = new ModelAndView("/websocket");
+        mav.addObject("cid", cid);
+        return mav;
     }
 
-    @RequestMapping(value="/starManager")
+    //推送数据接口
     @ResponseBody
-    public Map<String,Object> starManager() {
-        Map<String,Object> result =new HashMap<String,Object>();
+    @RequestMapping("/socket/push/{cid}")
+    public R pushToWeb(@PathVariable String cid, String message) {
         try {
-            Session session = SecurityUtils.getSubject().getSession();
-            webSocketServer.onOpen((javax.websocket.Session) session);
-            result.put("operationResult", true);
-        }catch (Exception e) {
-            result.put("operationResult", true);
+            WebSocketServer.sendInfo(message, cid);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return R.error(cid + "#" + e.getMessage());
         }
-        return result;
+        return R.ok(cid);
     }
 }
