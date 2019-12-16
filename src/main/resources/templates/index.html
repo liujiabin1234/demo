@@ -26,7 +26,16 @@
     function sendMessage() {
         var port = $("#port").val();
         var message = $("#message").val();
-        window.location.href = "http://localhost:8008/checkcenter/socket/push/" + port + "?message=" + message;
+        $.ajax({
+            url: "/checkcenter/socket/push/" + port ,
+            type: "GET",
+            data: {"message":message},
+            success: function (result) {
 
+            },
+            error: function (err) {
+                
+            }
+        })
     }
 </script>
