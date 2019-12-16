@@ -5,9 +5,28 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
     <a href="/permissionTest" shiro:hasPermission="companyUser:user:save">有权限</a><br/>
-    <a href="/permissionTest" >无权限</a><br/>
-    <a href="/sendMessage" >开启socket的22端口</a>
+    <a href="/permissionTest">无权限</a><br/>
+
+    <input id="port" type="text" placeholder="请输入需要开启的端口号"/>
+    <button onclick="openSocketPort()">发送请求</button><br/>
+
+    <input id="message" type="text" placeholder="请输入想发送的数据"/>
+    <button onclick="sendMessage()">发送请求</button><br/>
 </body>
 </html>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script>
+    function openSocketPort() {
+        var port = $("#port").val();
+        window.location.href = "http://localhost:8008/checkcenter/socket/" + port;
+
+    }
+
+    function sendMessage() {
+        var port = $("#port").val();
+        var message = $("#message").val();
+        window.location.href = "http://localhost:8008/checkcenter/socket/push/" + port + "?message=" + message;
+
+    }
+</script>

@@ -64,9 +64,4 @@ public class LoginController {
         return "账号:" + user.getUsername() + "密码:" + user.getPassword() + "接收重定向传递的数据:" + a + "," + b;
     }
 
-    //  websocket
-    @GetMapping("/sendMessage")
-    String sendMessage() {
-        return "websocket";
-    }
 }

@@ -9,13 +9,14 @@
 </body>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script>
+    var cid = [[${cid}]];
     var socket;
     if (typeof(WebSocket) == "undefined") {
         console.log("您的浏览器不支持WebSocket");
     } else {
         console.log("您的浏览器支持WebSocket");
         //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
-        socket = new WebSocket("ws://localhost:8083/websocket/22");
+        socket = new WebSocket("ws://localhost:8008/websocket/" + cid);
         // socket = new WebSocket("${basePath}websocket/${cid}".replace("http", "ws"));
         //打开事件
         socket.onopen = function () {

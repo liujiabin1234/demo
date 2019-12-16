@@ -2,11 +2,11 @@ package com.example.demo.websocket;
 
 import com.example.demo.utils.R;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 
@@ -25,15 +25,14 @@ import java.io.IOException;
 @RequestMapping("/checkcenter")
 public class CheckCenterController {
 
-    //页面请求
-    @GetMapping("/socket/{cid}")
-    public ModelAndView socket(@PathVariable String cid) {
-        ModelAndView mav = new ModelAndView("/websocket");
-        mav.addObject("cid", cid);
-        return mav;
+    //客户端开启websocket会话
+    @RequestMapping("/socket/{cid}")
+    public String socket(@PathVariable String cid, ModelMap modelMap) {
+        modelMap.addAttribute("cid", cid);
+        return "websocket";
     }
 
-    //推送数据接口
+    //服务端向客户端推送数据
     @ResponseBody
     @RequestMapping("/socket/push/{cid}")
     public R pushToWeb(@PathVariable String cid, String message) {
@@ -45,4 +44,5 @@ public class CheckCenterController {
         }
         return R.ok(cid);
     }
+
 }
