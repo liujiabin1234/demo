@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+//@Controller
 public class LogControllerTest {
 
     @Autowired
@@ -21,6 +22,12 @@ public class LogControllerTest {
         logController.testLogAspect();
     }
 
+//    @RequestMapping("/test")
+//    @ResponseBody
+//    public String test() {
+//        logController.testLogAspect();
+//        return "success";
+//    }
 }
 
 

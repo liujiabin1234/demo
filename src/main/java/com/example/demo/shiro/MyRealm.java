@@ -9,7 +9,6 @@ import org.apache.shiro.subject.PrincipalCollection;
 import java.util.HashSet;
 import java.util.Set;
 
-
 public class MyRealm extends AuthorizingRealm {
 
 
