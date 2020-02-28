@@ -5,11 +5,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.stereotype.Controller;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-//@Controller
+@Controller
 public class LogControllerTest {
 
     @Autowired
@@ -22,12 +25,12 @@ public class LogControllerTest {
         logController.testLogAspect();
     }
 
-//    @RequestMapping("/test")
-//    @ResponseBody
-//    public String test() {
-//        logController.testLogAspect();
-//        return "success";
-//    }
+    @RequestMapping("/test")
+    @ResponseBody
+    public String test() {
+        logController.testLogAspect();
+        return "success";
+    }
 }
 
 
