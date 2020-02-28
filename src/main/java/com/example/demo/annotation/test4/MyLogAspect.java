@@ -25,10 +25,10 @@ public class MyLogAspect {
     @Before("MyValid()")
     public void before(JoinPoint joinPoint) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        logger.debug("[" + signature.getName() + " : start.....]");
+        logger.info("[" + signature.getName() + " : start.....]");
 
         MyLog myLog = signature.getMethod().getAnnotation(MyLog.class);
-        logger.debug("【目标对象方法被调用时候产生的日志，记录到日志表中】：" + myLog.desc());
+        logger.info("【目标对象方法被调用时候产生的日志，记录到日志表中】：" + myLog.desc());
     }
 }
 
