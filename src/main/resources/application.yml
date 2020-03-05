@@ -19,10 +19,10 @@ spring:
     suffix: .html
     template-loader-path: file:D:/microger/MicroFinance/upload_files/Template/
   thymeleaf:
-#  prefix: file:D:/microger/MicroFinance/upload_files/Template/
-  prefix: classpath:/templates/
-  suffix: .html
-  mode: LEGACYHTML5
-  encoding: UTF-8
-  content-type: text/html
-  cache: false
+#    prefix: file:D:/microger/MicroFinance/upload_files/Template/
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: LEGACYHTML5
+    encoding: UTF-8
+    content-type: text/html
+    cache: false

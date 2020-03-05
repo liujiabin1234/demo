@@ -23,7 +23,7 @@ import java.util.Map;
  * 测试Freemarker生成html
  */
 @Controller
-public class testController {
+public class TestController {
 
     // 1、从spring容器中获得FreeMarkerConfigurer对象。
     @Autowired
