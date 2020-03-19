@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Controller
+//@Controller
 public class LogControllerTest {
 
     @Autowired
@@ -25,12 +25,12 @@ public class LogControllerTest {
         logController.testLogAspect();
     }
 
-    @RequestMapping("/test")
-    @ResponseBody
-    public String test() {
-        logController.testLogAspect();
-        return "success";
-    }
+//    @RequestMapping("/test")
+//    @ResponseBody
+//    public String test() {
+//        logController.testLogAspect();
+//        return "success";
+//    }
 }
 
 
