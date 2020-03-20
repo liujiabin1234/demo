@@ -24,10 +24,13 @@ public class DemoApplicationTests {
         String str = "Java string-split#test";
         String[] split = str.split(" |-|#");
         for (String s : split) {
-//            System.out.println(s);
+            System.out.println(s);
         }
+    }
 
-        String sql = "select * from smf.sys_user";
+    @Test
+    public void mybatisTest() {
+        String sql = "select * from large_count limit 0,10";
         List<Map<String, Object>> list = jdbcTemplate.queryForList(sql);
         for (Map<String, Object> map : list) {
             Set<Map.Entry<String, Object>> entries = map.entrySet();
@@ -42,5 +45,4 @@ public class DemoApplicationTests {
             }
         }
     }
-
 }

@@ -3,9 +3,9 @@ server:
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/microfinanceweb
-    username: postgres
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/my-demo?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    username: root
     password: 123456
   freemarker:
     allow-request-override: false
@@ -19,10 +19,15 @@ spring:
     suffix: .html
     template-loader-path: file:D:/microger/MicroFinance/upload_files/Template/
   thymeleaf:
-#    prefix: file:D:/microger/MicroFinance/upload_files/Template/
+  #    prefix: file:D:/microger/MicroFinance/upload_files/Template/
     prefix: classpath:/templates/
     suffix: .html
     mode: LEGACYHTML5
     encoding: UTF-8
     content-type: text/html
     cache: false
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  typeAliasesPackage: com.example.demo.**
+  mapper-locations: mapper/*.xml
