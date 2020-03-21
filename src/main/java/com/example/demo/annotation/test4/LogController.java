@@ -1,15 +1,28 @@
 package com.example.demo.annotation.test4;
 
 
-import org.springframework.stereotype.Component;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.stereotype.Controller;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Component
+@RestController
 public class LogController {
 
-    @MyLog(desc = "这是结合spring aop知识，讲解自定义注解应用的一个案例")
-    public void testLogAspect(){
-        System.out.println("这里随便来点啥");
+    @Autowired
+    private LogService logService;
+
+    @RequestMapping("/test")
+    public String test() {
+        logService.testLogAspect();
+        return "success";
     }
 }
+
 
 
