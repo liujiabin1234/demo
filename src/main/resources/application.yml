@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/my-demo?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
     username: root
     password: 123456
@@ -27,7 +27,8 @@ spring:
     content-type: text/html
     cache: false
 mybatis:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  #日志打印
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   typeAliasesPackage: com.example.demo.**
   mapper-locations: mapper/*.xml
