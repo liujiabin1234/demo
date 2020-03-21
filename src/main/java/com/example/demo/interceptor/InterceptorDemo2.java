@@ -12,7 +12,7 @@ public class InterceptorDemo2 extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         StringBuffer requestURL = httpServletRequest.getRequestURL();
-        System.out.println("前置拦截器2 preHandle： 请求的uri为："+requestURL.toString());
+        System.out.println("拦截器2 preHandle： 请求的uri为："+requestURL.toString());
         return true;
     }
 
