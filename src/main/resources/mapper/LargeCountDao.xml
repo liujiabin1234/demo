@@ -4,4 +4,8 @@
     <select id="queryById" resultType="com.example.demo.mybatis.dto.LargeCount">
         select * from large_count where id = #{id};
     </select>
+
+    <delete id="deleteById" parameterType="Integer" statementType="CALLABLE">
+		{call myprocedure(#{id,mode=IN})}
+	</delete>
 </mapper>

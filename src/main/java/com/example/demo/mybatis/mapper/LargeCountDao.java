@@ -7,4 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface LargeCountDao {
 
     LargeCount queryById(Integer id);
+
+    Integer deleteById(Integer id);
 }

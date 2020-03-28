@@ -5,4 +5,6 @@ import com.example.demo.mybatis.dto.LargeCount;
 public interface LargeCountService {
 
     LargeCount queryById(Integer id);
+
+    int deleteById(Integer id);
 }
