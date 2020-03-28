@@ -4,7 +4,7 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = "/test",filterName = "myFilter")
+@WebFilter(urlPatterns = "/test",filterName = "myFilter")//urlPatterns是过滤的访问路径，filterName是拦截器的名字
 public class FilterAnnotationTest implements Filter {
 
     @Override

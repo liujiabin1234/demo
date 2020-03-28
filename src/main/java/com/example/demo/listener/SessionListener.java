@@ -1,6 +1,7 @@
 package com.example.demo.listener;
 
 import javax.servlet.annotation.WebListener;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
@@ -9,12 +10,16 @@ public class SessionListener implements HttpSessionListener {
 
     @Override
     public void sessionCreated(HttpSessionEvent se) {
-        System.out.println("。。。创建session成功");
+        HttpSession session = se.getSession();
+        String sessionId = session.getId();
+        System.out.println("监听-session创建：" + sessionId);
     }
 
     @Override
     public void sessionDestroyed(HttpSessionEvent se) {
-        System.out.println("。。。销毁session");
+        HttpSession session = se.getSession();
+        String sessionId = session.getId();
+        System.out.println("监听-session销毁：" + sessionId);
     }
 }
 

@@ -12,9 +12,9 @@ public class InterceptorConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-
+        //添加各个拦截器拦截的地址
         registry.addInterceptor(new InterceptorDemo()).addPathPatterns("/test");
-        registry.addInterceptor(new InterceptorDemo2()).addPathPatterns("/login");
+        registry.addInterceptor(new InterceptorDemo2()).addPathPatterns("/test");
     }
 }
 

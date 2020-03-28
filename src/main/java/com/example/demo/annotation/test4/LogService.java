@@ -6,9 +6,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class LogService {
 
-    @MyLog(desc = "这是结合spring aop知识，讲解自定义注解应用的一个案例")
+    @MyLog(desc = "使用自定义注解实现日志记录的一个小案例")
     public void testLogAspect(){
-        System.out.println("这里随便来点啥");
+        System.out.println("自定义注解小案例演示结束");
     }
 }
 

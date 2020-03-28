@@ -1,6 +1,5 @@
 package com.example.demo.annotation.test4;
 
-
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -9,6 +8,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
 
 @Component
 @Aspect
@@ -25,10 +25,10 @@ public class MyLogAspect {
     @Before("MyValid()")
     public void before(JoinPoint joinPoint) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        logger.info("[" + signature.getName() + " : start.....]");
+        System.out.println("自定义注解被用到的接口名："+"[" + signature.getName() + "]");
 
         MyLog myLog = signature.getMethod().getAnnotation(MyLog.class);
-        logger.info("【目标对象方法被调用时候产生的日志，记录到日志表中】：" + myLog.desc());
+        System.out.println("将自定义注解中的描述记录到日志表中："+"[" + myLog.desc() + "]");
     }
 }
 
