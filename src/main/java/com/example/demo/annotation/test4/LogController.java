@@ -22,6 +22,12 @@ public class LogController {
         logService.testLogAspect();
         return "success";
     }
+
+    @RequestMapping("/test2")
+    public String test2() {
+        logService.testLogAspect();
+        return "success";
+    }
 }
 
 
