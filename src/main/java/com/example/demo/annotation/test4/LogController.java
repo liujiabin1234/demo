@@ -29,11 +29,6 @@ public class LogController {
         return "success";
     }
 
-    @RequestMapping("/test3")
-    public String test3() {
-        logService.testLogAspect();
-        return "success";
-    }
 }
 
 
