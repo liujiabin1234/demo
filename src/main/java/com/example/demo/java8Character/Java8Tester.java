@@ -1,4 +1,4 @@
-package com.example.demo.java8;
+package com.example.demo.java8Character;
 
 public class Java8Tester {
     interface MathOperation {
