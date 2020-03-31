@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 @Transactional
@@ -25,5 +26,10 @@ public class LargeCountServiceImpl implements LargeCountService {
     @Override
     public int deleteById(Integer id) {
         return largeCountDao.deleteById(id);
+    }
+
+    @Override
+    public List<LargeCount> queryAll() {
+        return largeCountDao.queryAll();
     }
 }

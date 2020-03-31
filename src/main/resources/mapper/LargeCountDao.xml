@@ -8,4 +8,8 @@
     <delete id="deleteById" parameterType="Integer" statementType="CALLABLE">
 		{call myprocedure(#{id,mode=IN})}
 	</delete>
+
+    <select id="queryAll" resultType="com.example.demo.mybatis.dto.LargeCount">
+        select * from large_count
+    </select>
 </mapper>

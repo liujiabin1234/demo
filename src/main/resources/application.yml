@@ -1,5 +1,10 @@
 server:
   port: 8008
+
+logging:
+  level:
+    learning: trace
+
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
@@ -32,3 +37,10 @@ mybatis:
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   typeAliasesPackage: com.example.demo.**
   mapper-locations: mapper/*.xml
+  check-config-location: true
+# 分页插件
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
