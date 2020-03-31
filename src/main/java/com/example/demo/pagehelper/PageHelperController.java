@@ -18,8 +18,8 @@ public class PageHelperController {
     @Autowired
     private LargeCountService largeCountService;
 
-    @GetMapping("/getAllPerson")
-    public String getAllPerson(Model model, @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
+    @GetMapping("/getAllLargeCount")
+    public String getAllLargeCount(Model model, @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
         PageHelper.startPage(pageNum,5);
         List<LargeCount> list = largeCountService.queryAll();
         PageInfo<LargeCount> pageInfo = new PageInfo<LargeCount>(list);

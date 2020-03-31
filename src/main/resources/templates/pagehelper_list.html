@@ -13,17 +13,17 @@
             <th>sex</th>
             <th>age</th>
         </tr>
-        <tr th:each="person:${pageInfo.list}">
-            <td th:text="${person.id}"></td>
-            <td th:text="${person.name}"></td>
-            <td th:text="${person.age}"></td>
+        <tr th:each="largeCount:${pageInfo.list}">
+            <td th:text="${largeCount.id}"></td>
+            <td th:text="${largeCount.name}"></td>
+            <td th:text="${largeCount.age}"></td>
         </tr>
     </table>
     <p>当前 <span th:text="${pageInfo.pageNum}"></span> 页,总 <span th:text="${pageInfo.pages}"></span> 页,共 <span th:text="${pageInfo.total}"></span> 条记录</p>
-    <a th:href="@{/getAllPerson}">首页</a>
-    <a th:href="@{/getAllPerson(pageNum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}">上一页</a>
-    <a th:href="@{/getAllPerson(pageNum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">下一页</a>
-    <a th:href="@{/getAllPerson(pageNum=${pageInfo.pages})}">尾页</a>
+    <a th:href="@{/getAllLargeCount}">首页</a>
+    <a th:href="@{/getAllLargeCount(pageNum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}">上一页</a>
+    <a th:href="@{/getAllLargeCount(pageNum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">下一页</a>
+    <a th:href="@{/getAllLargeCount(pageNum=${pageInfo.pages})}">尾页</a>
 </div>
 </body>
 </html>
