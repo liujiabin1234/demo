@@ -1,5 +1,6 @@
 package com.example.demo.shiro;
 
+import com.example.demo.utils.ValidatorUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.UUID;
 
 
@@ -34,10 +36,11 @@ public class LoginController {
     //  登录
     @PostMapping("/ajaxLogin")
     @ResponseBody
-    String ajaxLogin(String username, String password) {
+    String ajaxLogin(User user) {
         try {
+//            ValidatorUtils.validateEntity(user);
             //收集实体/凭据信息
-            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+            UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(),user.getPassword());
             Subject subject = SecurityUtils.getSubject();
             subject.login(token);
         } catch (Exception e) {
