@@ -12,25 +12,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-//@Controller
-public class LogControllerTest {
+public class LogServiceTest {
 
     @Autowired
-    private LogController logController;
+    private LogService logService;
 
 //    @Transactional   //标明此方法需使用事务
 //    @Rollback(false) //标明使用完此方法后事务不回滚,true时为回滚
     @Test
     public void testLogAspect() {
-        logController.testLogAspect();
+        logService.testLogAspect();
     }
 
-//    @RequestMapping("/test")
-//    @ResponseBody
-//    public String test() {
-//        logController.testLogAspect();
-//        return "success";
-//    }
 }
 
 
