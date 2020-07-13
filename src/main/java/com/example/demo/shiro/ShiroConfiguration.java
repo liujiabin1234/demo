@@ -62,6 +62,7 @@ public class ShiroConfiguration {
         map.put("/css/**", "anon");
         map.put("/js/**", "anon");
         map.put("/checkcenter/**", "anon");
+        map.put("/websocket/**", "anon");
         //登出
         map.put("/logout","logout");
         //对所有用户认证
