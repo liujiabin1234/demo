@@ -4,9 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.AssertFalse;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
@@ -21,6 +22,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Accessors(chain = true)
 public class User implements Serializable {
 
     public User(String username, String password) {
@@ -31,6 +33,10 @@ public class User implements Serializable {
     public User(String username, Integer age) {
         this.username = username;
         this.age = age;
+    }
+
+    public User(String username) {
+        this.username = username;
     }
 
     @NotBlank(message="用户名不能为空")
