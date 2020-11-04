@@ -11,7 +11,7 @@ public class MyCallable {
         Callable myCallable = new Callable() {
             @Override
             public String call() throws Exception {
-//                Thread.sleep(3000);
+                Thread.sleep(3000);
                 System.out.println("calld方法执行了");
                 return "call方法返回值";
             }
@@ -19,7 +19,7 @@ public class MyCallable {
         System.out.println("提交任务之前 " + getStringDate());
         Future future = executor.submit(myCallable);
         System.out.println("提交任务之后，获取结果之前 " + getStringDate());
-        System.out.println("获取返回值: " + future.get());
+//        System.out.println("获取返回值: " + future.get());
         System.out.println("获取到结果之后 " + getStringDate());
     }
 

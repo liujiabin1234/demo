@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import com.alibaba.fastjson.JSONArray;
+import com.example.demo.mybatis.dto.LargeCount;
 import com.example.demo.mybatis.service.LargeCountService;
 import com.example.demo.redis.RedisCacheClient;
 import org.junit.Test;
@@ -8,9 +10,11 @@ import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 
@@ -26,6 +30,21 @@ public class DemoApplicationTests {
     private RedisCacheClient redisCacheClient;
     @Autowired
     private RedissonClient redissonClient;
+
+    @Test
+    public void test6() {
+        redisCacheClient.boundZSetOps("三国2").add("曹操", 1);
+        redisCacheClient.boundZSetOps("三国2").add("曹操2", 2);
+        redisCacheClient.boundZSetOps("三国2").add("曹操3", 3);
+        redisCacheClient.boundZSetOps("三国2").add("曹操4", 4);
+        redisCacheClient.boundZSetOps("三国2").add("曹操5", 5);
+        //按照分数正序排序
+//        Set<ZSetOperations.TypedTuple<String>> set = redisCacheClient.opsForZSet().rangeByScoreWithScores("三国2", 1, 50, 0, 3);
+//        System.out.println(JSONArray.toJSONString(set));
+        //按照分数倒序排序
+        Set<ZSetOperations.TypedTuple<String>> set1 = redisCacheClient.opsForZSet().reverseRangeByScoreWithScores("三国2", 0, 999);
+        System.out.println(JSONArray.toJSONString(set1));
+    }
 
     @Test
     public void test5() {
@@ -109,7 +128,7 @@ public class DemoApplicationTests {
 
     @Test
     public void queryLargeCountByIdTest() {
-//        LargeCount largeCount = largeCountService.queryById(1);
-//        System.out.println(largeCount);
+        LargeCount largeCount = largeCountService.queryById(1);
+        System.out.println(largeCount);
     }
 }
