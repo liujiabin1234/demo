@@ -28,6 +28,14 @@ public class DemoApplicationTests {
     private RedissonClient redissonClient;
 
     @Test
+    public void test5() {
+        if (redisCacheClient.hasKey("三国2")) {
+            redisCacheClient.delete("三国2");
+        }
+        redisCacheClient.boundZSetOps("三国2").add("曹操", 1);
+    }
+
+    @Test
     public void test4() throws InterruptedException {
         RLock rLock = redissonClient.getLock(String.format("lj:lock:o2ot:ow-order:pay:%s", "Tom"));
 //        rLock.lock();
