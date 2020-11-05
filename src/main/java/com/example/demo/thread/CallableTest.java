@@ -1,11 +1,20 @@
 package com.example.demo.thread;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.*;
 
-public class MyCallable {
-    public static void main(String[] args) throws InterruptedException, ExecutionException {
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class CallableTest {
+
+    @Test
+    public void test() throws ExecutionException, InterruptedException {
         ExecutorService executor = Executors.newFixedThreadPool(2);
         //创建一个Callable，3秒后返回String类型
         Callable myCallable = new Callable() {
@@ -19,8 +28,9 @@ public class MyCallable {
         System.out.println("提交任务之前 " + getStringDate());
         Future future = executor.submit(myCallable);
         System.out.println("提交任务之后，获取结果之前 " + getStringDate());
-//        System.out.println("获取返回值: " + future.get());
+        System.out.println("获取返回值: " + future.get());
         System.out.println("获取到结果之后 " + getStringDate());
+        executor.shutdown();
     }
 
     public static String getStringDate() {
