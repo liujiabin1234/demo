@@ -6,16 +6,12 @@ import com.example.demo.mybatis.service.LargeCountService;
 import com.example.demo.redis.RedisCacheClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.redisson.api.RLock;
-import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.ZSetOperations;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 
 @RunWith(SpringRunner.class)
@@ -23,13 +19,9 @@ import java.util.concurrent.TimeUnit;
 public class DemoApplicationTests {
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
-    @Autowired
     private LargeCountService largeCountService;
     @Autowired
     private RedisCacheClient redisCacheClient;
-    @Autowired
-    private RedissonClient redissonClient;
 
     @Test
     public void test6() {
@@ -53,31 +45,6 @@ public class DemoApplicationTests {
         }
         redisCacheClient.boundZSetOps("三国2").add("曹操", 1);
     }
-
-    @Test
-    public void test4() throws InterruptedException {
-        RLock rLock = redissonClient.getLock(String.format("lj:lock:o2ot:ow-order:pay:%s", "Tom"));
-//        rLock.lock();
-//        rLock.lock(1, TimeUnit.MINUTES);
-        // 尝试加锁，最多等待1秒，上锁以后1分钟自动解锁，tryLock方法有返回值
-        boolean b = rLock.tryLock(1, 1, TimeUnit.MINUTES);
-        System.out.println(b);
-        unlock(String.format("lj:lock:o2ot:ow-order:pay:%s", "Tom"));
-    }
-
-    public void unlock(String lockKey) {
-        try {
-            RLock lock = redissonClient.getLock(lockKey);
-            //判断线程是否持有锁，因为有可能程序执行期间锁自动释放或被别的线程释放，当主动释放的时候会报错：Caused by: java.lang.IllegalMonitorStateException: attempt to unlock lock, not locked by current thread by node id
-            if (lock != null && lock.isHeldByCurrentThread()) {
-                lock.unlock();
-            }
-        } catch (Throwable e) {
-            String msg = String.format("UNLOCK FAILED: key=%s", lockKey);
-            throw new IllegalStateException(msg, e);
-        }
-    }
-
 
     @Test
     public void test3() {

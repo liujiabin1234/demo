@@ -6,16 +6,14 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 /**
  * 开启WebSocket支持
- *
+ * <p>
  * 进行springjunit测试的时候需要注释掉
  */
-@Configuration
-public class WebSocketConfig {
-
-    @Bean
-    public ServerEndpointExporter serverEndpointExporter() {
-        return new ServerEndpointExporter();
-    }
-
-}
+//@Configuration
+//public class WebSocketConfig {
+//    @Bean
+//    public ServerEndpointExporter serverEndpointExporter() {
+//        return new ServerEndpointExporter();
+//    }
+//}
 
