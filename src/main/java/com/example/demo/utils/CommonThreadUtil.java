@@ -7,6 +7,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
@@ -48,31 +49,29 @@ public class CommonThreadUtil {
             // 多线程分配策略
             final List<Future<String>> results = new ArrayList<>();
             final AtomicInteger taskCounter = new AtomicInteger(0);
-//            final CountDownLatch countDownLatch = new CountDownLatch(splitList.size());
+            final CountDownLatch countDownLatch = new CountDownLatch(splitList.size());
             for (List<T> currentBatchProcess : splitList) {
-                results.add(taskRunner(currentBatchProcess, maxThread, taskPool, taskCounter, resDataList, function));
+                results.add(taskRunner(countDownLatch,currentBatchProcess, maxThread, taskPool, taskCounter, resDataList, function));
             }
             // 方式一：通过获取线程返回值，阻塞主线程
-            for (final Future<String> result : results) {
-                try {
-                    //获取线程执行结果，将会阻塞主线程执行，主线程需等待子线程执行结束才能继续执行，取决于业务需要采取此方法
-                    String threadResult = result.get();
-                    System.out.println(Thread.currentThread().getName() + "返回值" + threadResult);
-                } catch (final Exception e) {
-                    final String errorMsg = "CommonThreadUtil thread happened error!" + e.getMessage();
-                    LOG.error(errorMsg, e);
-                } finally {
-//                    countDownLatch.countDown();
-                }
-            }
-            // 方式二：通过await()方法，阻塞主线程
-//            try {
-//                System.out.println("主线程阻塞,等待所有子线程执行完成");
-//                boolean await = countDownLatch.await(10, TimeUnit.SECONDS);
-//                System.out.println("所有线程执行完成，结果：" + await);
-//            } catch (Exception e) {
-//                LOG.error("阻塞等待异常，{}", e.getMessage());
+//            for (final Future<String> result : results) {
+//                try {
+//                    //获取线程执行结果，将会阻塞主线程执行，主线程需等待子线程执行结束才能继续执行，取决于业务需要采取此方法
+//                    String threadResult = result.get();
+//                    System.out.println(Thread.currentThread().getName() + "返回值" + threadResult);
+//                } catch (final Exception e) {
+//                    final String errorMsg = "CommonThreadUtil thread happened error!" + e.getMessage();
+//                    LOG.error(errorMsg, e);
+//                }
 //            }
+            // 方式二：通过await()方法，阻塞主线程
+            try {
+                System.out.println("主线程阻塞,等待所有子线程执行完成");
+                countDownLatch.await();
+                System.out.println("所有线程执行完成");
+            } catch (Exception e) {
+                LOG.error("阻塞等待异常，{}", e.getMessage());
+            }
         }
         return resDataList;
     }
@@ -84,7 +83,8 @@ public class CommonThreadUtil {
      * @param resDataList
      * @return
      */
-    public static <T, R> Future<String> taskRunner(final List<T> preProcessDatas,
+    public static <T, R> Future<String> taskRunner(CountDownLatch countDownLatch,
+                                                   final List<T> preProcessDatas,
                                                    final int taskTotal,
                                                    ThreadPoolTaskExecutor taskPool,
                                                    final AtomicInteger taskCounter,
@@ -97,7 +97,9 @@ public class CommonThreadUtil {
                 taskCounter.incrementAndGet();
                 try {
                     LOG.info("CommonThreadUtil start new thread,taskRunner process ({}) records.", preProcessDatas.size());
+//                    Thread.sleep((long) (Math.random() * 10000));
                     resDataList.addAll(function.apply(preProcessDatas));
+                    countDownLatch.countDown();
                 } catch (final Exception e) {
                     final String errorMsg = "CommonThreadUtil taskRunner erroroccured:" + e.getMessage();
                     LOG.error(errorMsg, e);
