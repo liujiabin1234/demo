@@ -5,14 +5,14 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.concurrent.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CallableTest {
 
+    //测试future.get()方法是否会阻断主线程执行
+    //结论：会，如果调用get()方法，只有子线程执行返回结果主线程才能继续执行，如果不调用get()方法主线程执行则无需等待子线程返回结果
     @Test
     public void test() throws ExecutionException, InterruptedException {
         ExecutorService executor = Executors.newFixedThreadPool(2);
@@ -20,23 +20,18 @@ public class CallableTest {
         Callable myCallable = new Callable() {
             @Override
             public String call() throws Exception {
+                //测试关键点
                 Thread.sleep(3000);
                 System.out.println("calld方法执行了");
                 return "call方法返回值";
             }
         };
-        System.out.println("提交任务之前 " + getStringDate());
-        Future future = executor.submit(myCallable);
-        System.out.println("提交任务之后，获取结果之前 " + getStringDate());
-        System.out.println("获取返回值: " + future.get());
-        System.out.println("获取到结果之后 " + getStringDate());
+        //关闭线程池
         executor.shutdown();
-    }
-
-    public static String getStringDate() {
-        Date currentTime = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-        String dateString = formatter.format(currentTime);
-        return dateString;
+        System.out.println("提交任务之前");
+        Future future = executor.submit(myCallable);
+        System.out.println("提交任务之后");
+        System.out.println("获取返回值: " + future.get());
+        System.out.println("子线程执行完毕，主线程继续执行。。。。。。");
     }
 }
