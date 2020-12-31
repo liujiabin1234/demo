@@ -38,12 +38,14 @@ spring:
     cache: false
 
 mybatis:
-  #日志打印
-#  configuration:
+  configuration:
+    #开启驼峰
+    map-underscore-to-camel-case: true
+    #日志打印sql
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  typeAliasesPackage: com.example.demo.**
   mapper-locations: mapper/*.xml
-  check-config-location: true
+#  check-config-location: true
+  type-aliases-package: com.example.demo.**
 
 # 分页插件
 pagehelper:
