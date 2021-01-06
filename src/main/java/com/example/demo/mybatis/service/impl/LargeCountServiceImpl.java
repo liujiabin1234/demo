@@ -32,4 +32,14 @@ public class LargeCountServiceImpl implements LargeCountService {
     public List<LargeCount> queryAll() {
         return largeCountDao.queryAll();
     }
+
+    @Override
+    public Long devQuery(Long i) {
+        return largeCountDao.devQuery(i);
+    }
+
+    @Override
+    public Long devInsert(long l) {
+        return largeCountDao.devInsert(l);
+    }
 }

@@ -13,4 +13,8 @@ public interface LargeCountDao {
     Integer deleteById(Integer id);
 
     List<LargeCount> queryAll();
+
+    Long devQuery(Long i);
+
+    Long devInsert(long l);
 }

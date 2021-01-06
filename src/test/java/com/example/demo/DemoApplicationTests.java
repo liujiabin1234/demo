@@ -98,4 +98,16 @@ public class DemoApplicationTests {
         LargeCount largeCount = largeCountService.queryById(1);
         System.out.println(largeCount);
     }
+
+    @Test
+    public void devQuery() {
+        Long largeCount = largeCountService.devQuery(4L);
+        System.out.println(largeCount);
+    }
+
+    @Test
+    public void devInsert() {
+        Long largeCount = largeCountService.devInsert(4L);
+        System.out.println(largeCount);
+    }
 }

@@ -11,4 +11,8 @@ public interface LargeCountService {
     int deleteById(Integer id);
 
     List<LargeCount> queryAll();
+
+    Long devQuery(Long i);
+
+    Long devInsert(long l);
 }
