@@ -12,6 +12,8 @@ import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 @RunWith(SpringRunner.class)
@@ -109,5 +111,13 @@ public class DemoApplicationTests {
     public void devInsert() {
         Long largeCount = largeCountService.devInsert(4L);
         System.out.println(largeCount);
+    }
+
+    @Test
+    public void teshuzifu() {
+        String regEx="[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher("花&妈妈mama");
+        System.out.println(m.replaceAll("").trim());
     }
 }
