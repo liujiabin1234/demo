@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -119,5 +120,12 @@ public class DemoApplicationTests {
         Pattern p = Pattern.compile(regEx);
         Matcher m = p.matcher("花&妈妈mama");
         System.out.println(m.replaceAll("").trim());
+    }
+
+    @Test
+    public void test() {
+        //获取集合全部数据
+        List<String> rangetest = redisCacheClient.opsForList().range("rangetest", 0, -1);
+        System.out.println(JSONArray.toJSONString(rangetest));
     }
 }
